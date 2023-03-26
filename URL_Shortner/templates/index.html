@@ -1,0 +1,43 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <div></div>
+    <h1 style="font-family: Ubuntu; margin-top: 10%; justify-content: center;">{% block title %} Welcome to URLShortener {% endblock %}</h1>
+    <form method="post">
+    <div class="form-group">
+        <label for="url">URL</label>
+        <input required type="text" name="url"
+               placeholder="URL to shorten" class="form-control"
+               value="{{ request.form['url'] }}" autofocus></input>
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+    </form>
+
+    {% if short_url %}
+        <hr>
+        <span>{{ short_url }}</span>
+
+        <button onclick="copyToClipboard( '{{ short_url }}')" class="btn btn-primary">Copy to clipboard</button>
+
+        <script>
+        function copyToClipboard(text) {
+        // create a temporary element to hold the text
+        var temp = document.createElement('textarea');
+        temp.value = text;
+
+        // append the element to the document
+        document.body.appendChild(temp);
+
+        // select and copy the text
+        temp.select();
+        document.execCommand('copy');
+
+        // remove the temporary element
+        document.body.removeChild(temp);
+        }
+        </script>
+    {% endif %}
+{% endblock %}
